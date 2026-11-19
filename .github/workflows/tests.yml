@@ -1,0 +1,19 @@
+name: Python core tests
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  core:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image: ["ubuntu:22.04", "ubuntu:24.04", "debian:12", "debian:13"]
+    container: ${{ matrix.image }}
+    steps:
+      - name: Install test runtime
+        run: apt-get update && apt-get install -y python3 openssl git ca-certificates
+      - uses: actions/checkout@v4
+      - run: python3 -m unittest discover -s tests -v
+      - run: python3 tools/integration_smoke.py
+      - run: python3 -m compileall -q vps_migrator tests
+      - run: python3 -m vps_migrator --help

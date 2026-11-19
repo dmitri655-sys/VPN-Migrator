@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vps-migrator"
+version = "0.2.0"
+description = "Conservative SSH migration of 3x-ui/Xray on Debian and Ubuntu"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+dependencies = []
+
+[project.scripts]
+vps-migrator = "vps_migrator.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["vps_migrator*"]
